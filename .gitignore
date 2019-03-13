@@ -1,0 +1,34 @@
+# Python templorary files
+*.pyc
+__pycache__
+# sqlite database
+db.sqlite3
+# Pytest cache files
+.pytest_cache
+# Coverage filess
+*.coverage
+# Virtualenv directory
+myvenv
+# Sandbox
+sandbox
+# Ansible retry files
+*.retry
+# Django collected static files
+agronom/staticroot
+# celerybeat files
+agronom/celerybeat-schedule
+agronom/celerybeat-schedule.db
+agronom/celerybeat.pid
+
+# Editor templorary and backup files
+# Vim
+*~
+*.swo
+*.swp
+# IDEA settings
+.idea
+# Sphinx builds
+docs/_api_build
+docs/_full_build
+# Vagrant directory
+.vagrant

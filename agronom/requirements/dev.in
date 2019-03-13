@@ -1,0 +1,33 @@
+-r base.txt
+
+django-extensions     # полезные manage commands для разработки
+
+### Документация
+
+sphinx                # Генератор документации
+sphinx_rtd_theme      # Тема документации
+coreapi               # Генератор документации и схем API для djangorestframework
+-e git+https://github.com/Valera/django-rest-framework-docs.git@support-django-2.0#egg=drfdocs  # Улучшенный гененатор документации
+drf-yasg              # Генератор json-ов в формате swagger + автодок на их основе
+django-crispy-forms   # Красивые формы в автодоках
+
+
+### Отладка
+
+httpie                # Простой HTTP клиент для тестовых запросов
+django-debug-toolbar  # Отладочная панель, встраиваемая в django
+-e git+https://github.com/musindmitriy/django-debug-panel.git@e7dc30ace1605ee278d6806af13424b93ce481ed#egg=django-debug-panel  # Отладочная панель, для Ajax-запросов
+django-silk           # Профилировщик django
+ipdb                  # IPython в manage.py shell
+
+### Тестирование
+
+flake8                # для проверки коммита
+coverage              # отчет о покрытии кода тестами
+pytest-django         # для удобного сообщения об ошибке в тестах
+responses             # моки http-запросов
+freezegun             # моки datetime
+
+### Frontend
+
+django-webpack-loader # Подгрузка webpack бандлов

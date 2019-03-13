@@ -1,0 +1,58 @@
+{
+    "feature": {
+        "attrs": {
+            "adate": "25.08.2016",
+            "address": "\u0420\u043e\u0441\u0442\u043e\u0432\u0441\u043a\u0430\u044f \u043e\u0431\u043b., \u0410\u043a\u0441\u0430\u0439\u0441\u043a\u0438\u0439 \u0440-\u043d, \u041e\u0410\u041e \"\u0421\u043e\u0432\u0445\u043e\u0437 \u041e\u043b\u044c\u0433\u0438\u043d\u0441\u043a\u0438\u0439\"",
+            "anno_text": "158",
+            "area_type": null,
+            "area_unit": null,
+            "area_value": null,
+            "cad_cost": 41863047.2,
+            "cad_eng_data": {
+                "actual_date": "Thu, 25 Aug 2016 00:00:00 GMT",
+                "ci_first": "\u0410\u043d\u0434\u0440\u0435\u0439",
+                "ci_n_certificate": "61-11-218",
+                "ci_patronymic": "\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440\u043e\u0432\u0438\u0447",
+                "ci_surname": "\u041d\u0438\u043a\u043e\u043b\u044c\u0446\u0435\u0432",
+                "lastmodified": "Thu, 25 Aug 2016 19:59:47 GMT",
+                "rc_type": 0
+            },
+            "cad_record_date": "25.08.2016",
+            "cad_unit": "383",
+            "category_type": "003001000000",
+            "cn": "61:02:0600018:158",
+            "date_cost": "01.08.2016",
+            "date_create": "01.08.2016",
+            "fp": null,
+            "id": "61:2:600018:158",
+            "kvartal": "61:2:600018",
+            "kvartal_cn": "61:02:0600018",
+            "okrug": "61",
+            "okrug_cn": "61",
+            "pubdate": "26.08.2016",
+            "rayon": "61:2",
+            "rayon_cn": "61:02",
+            "reg": 161,
+            "rifr": null,
+            "rights_reg": 1,
+            "sale": null,
+            "statecd": "06",
+            "util_by_doc": "\u0414\u043b\u044f \u0441\u0435\u043b\u044c\u0441\u043a\u043e\u0445\u043e\u0437\u044f\u0439\u0441\u0442\u0432\u0435\u043d\u043d\u043e\u0433\u043e \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u044f",
+            "util_code": "141001000000"
+        },
+        "center": {
+            "x": 4456749.916499998,
+            "y": 5963679.8467999995
+        },
+        "extent": {
+            "xmax": 4459507.360232953,
+            "xmin": 4449904.623055288,
+            "ymax": 5968667.031008417,
+            "ymin": 5962826.43163591
+        },
+        "stat": {},
+        "type": 1
+    },
+    "note": "",
+    "status": 200
+}

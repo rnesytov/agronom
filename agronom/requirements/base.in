@@ -1,0 +1,72 @@
+### Gunicorn
+
+# c поддержкой gthread:
+# gunicorn[gthread]           # WSGI-сервер
+
+# C поддержкой gevent:
+gunicorn[gevent]           # WSGI-сервер
+django-db-geventpool       # Поддержка асинхронных обращений к БД
+psycogreen                 # Поддержка асинхронных обращений к БД
+
+
+### Backend
+
+Django                        # Бекенд
+## celery                     # Выполнение асинхронных заданий
+## django-push-notifications  # Для Push-нотификаций
+
+
+### Postgresql
+
+psycopg2-binary  # Библиотека для работы с БД Posgresql
+
+
+### REST API
+
+djangorestframework       # фреймворк для REST API
+drf-extensions            # Расширения для REST API
+django-filter             # Для фильтрации в Django Rest Framework
+djangorestframework-gis   # Поддержка GeoDjango в Django Rest Framework
+
+
+### Redis
+
+redis  # Для кэширования данных в Redis
+aioredis  # Для подключения к Redis из асинхронных функций
+django-cacheops  # Для работы с кешем redis из django
+django-pickling  # Быстрый движок сериализации/десериализации объектов в/из кеша
+
+
+### Мониторинг
+
+django-prometheus  # Отправка метрик Django в систему мониторинга Prometheus
+python-logstash    # Для записи логов
+flower             # Celery monitoring
+elasticsearch-dsl  # Для работы с elasticsearch
+raven              # Модуль для Sentry
+pika               # Для передачи метрик в экспортер через RabbitMQ
+
+
+### Внешние API
+
+requests         # Библиотека для выполнения HTTP-запросов
+
+
+### Other utils
+
+django-split-settings  # Для управления файлами настроек Django
+pip-tools              # Нужен для работы pip-sync
+
+### Stories
+
+stories                # DSL для написания бизнес-логики
+
+### Geo
+
+django-leaflet         # Leaflet карты в админке
+scikit-image           # Обработка изображений
+rasterio               # Работа с растрами
+
+### Allauth
+
+django-allauth
