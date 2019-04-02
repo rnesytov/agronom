@@ -14,6 +14,14 @@ pip install -r requirements.txt
 cd agronom/frontend
 yarn
 ```
+## БД
+```
+CREATE DATABASE agronom_db;
+CREATE USER test_agronom_user WITH ENCRYPTED PASSWORD 'pass';
+GRANT ALL privileges ON DATABASE agronom_db TO test_agronom_user;
+\c agronom_db
+CREATE EXTENSION postgis;
+```
 
 # Запуск
 ## Django сервер
