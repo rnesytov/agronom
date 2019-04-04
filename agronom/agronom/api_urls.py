@@ -12,6 +12,7 @@ urlpatterns = [
     path('cadastral/', include('cadastral.api_urls')),
     path('cadastral/', include('fields.api_urls')),
     path('weather/', include('weather.api_urls')),
+    path('ndvi/', include('ndvi.api_urls')),
 ]
 
 if 'silk' in settings.INSTALLED_APPS and settings.ENABLE_UNSAFE_PROFILING:

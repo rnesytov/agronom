@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'customuser',
     'cadastral',
     'fields',
-    'weather'
+    'weather',
+    'ndvi'
 ]
 
 
