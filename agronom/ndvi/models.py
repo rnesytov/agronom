@@ -9,3 +9,4 @@ class NDVI(models.Model):
     date = models.DateField()
     img = models.ImageField()
     mean = models.DecimalField(max_digits=3, decimal_places=2)
+    boundary = models.MultiPointField()

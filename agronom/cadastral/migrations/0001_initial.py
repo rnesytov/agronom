@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('cadastral_number', models.CharField(max_length=25, validators=[django.core.validators.RegexValidator('[0-9]{2}:[0-9]{2}:[0-9]{7}:[0-9]{1,10}', 'Invalid cadastral number')])),
                 ('loading_state', models.PositiveSmallIntegerField(choices=[(0, 'not loaded'), (1, 'loaded'), (2, 'failed')], default=0)),
-                ('polygon', django.contrib.gis.db.models.fields.PolygonField(geography=True, null=True, srid=4326)),
+                ('polygon', django.contrib.gis.db.models.fields.PolygonField(null=True)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),

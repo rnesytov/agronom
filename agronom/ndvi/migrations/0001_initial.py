@@ -22,7 +22,8 @@ class Migration(migrations.Migration):
                 ('img', models.ImageField(upload_to='')),
                 ('mean', models.DecimalField(decimal_places=2, max_digits=3)),
                 ('field', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fields.Field')),
-                ('product_id', models.CharField(db_index=True, max_length=100))
+                ('product_id', models.CharField(db_index=True, max_length=100)),
+                ('boundary', django.contrib.gis.db.models.fields.MultiPointField(default=None))
             ],
         ),
     ]

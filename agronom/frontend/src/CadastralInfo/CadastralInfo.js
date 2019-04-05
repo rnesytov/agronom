@@ -9,10 +9,19 @@ import {
 import axios from "axios";
 import L from "leaflet";
 import React from "react";
-import { FeatureGroup, Map, Polygon, TileLayer, GeoJSON } from "react-leaflet";
+import {
+  FeatureGroup,
+  Map,
+  Polygon,
+  TileLayer,
+  GeoJSON,
+  ImageOverlay
+} from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";
 import EditField from "./EditField";
-import Weather from "./Weather"
+import Weather from "./Weather";
+import NDVI from "./NDVI";
+import ReactDistortableImageOverlay from "react-leaflet-distortable-imageoverlay";
 
 const styles = {
   map: {
@@ -25,12 +34,12 @@ const styles = {
 
 class CadastralInfo extends React.Component {
   state = {
-    cadLoaded: false,
-    cadastral: {},
-    fieldsLoaded: false,
-    fields: [],
+    cadastral: null,
+    fields: null,
+    ndvi: [],
+
     editDrawerOpen: false,
-    currentField: {},
+    currentField: null,
     tabValue: 0
   };
 
@@ -44,7 +53,7 @@ class CadastralInfo extends React.Component {
       .get(`/api/v0_1/cadastral/${this.props.match.params.id}/`)
       .then(res => {
         const cadastral = res.data;
-        this.setState({ cadastral, cadLoaded: true });
+        this.setState({ cadastral });
         document.title = `Участок ${cadastral.cadastral_number}`;
       });
   }
@@ -54,7 +63,7 @@ class CadastralInfo extends React.Component {
       .get(`/api/v0_1/cadastral/${this.props.match.params.id}/fields/`)
       .then(res => {
         const fields = res.data;
-        this.setState({ fields, fieldsLoaded: true });
+        this.setState({ fields });
       });
   }
 
@@ -100,8 +109,7 @@ class CadastralInfo extends React.Component {
   getBounds = () => {
     const poly = this.state.cadastral.polygon;
 
-    return L.geoJSON(poly)
-      .getBounds();
+    return L.geoJSON(poly).getBounds();
   };
 
   _onCreate = e => {
@@ -114,13 +122,29 @@ class CadastralInfo extends React.Component {
     this.setState({ tabValue });
   };
 
+  showNDVI = (ndvi) => {
+    const coords = ndvi.boundary.coordinates;
+
+    const preparedNDVI = {
+      url: ndvi.img,
+      bounds: [
+        L.latLng(coords[0][1], coords[0][0]),
+        L.latLng(coords[1][1], coords[1][0]),
+        L.latLng(coords[2][1], coords[2][0]),
+        L.latLng(coords[3][1], coords[3][0])
+      ]
+    };
+
+    this.setState({ ndvi: this.state.ndvi.concat([preparedNDVI])})
+  }
+
   render() {
     const { classes } = this.props;
 
-    if (this.state.cadLoaded && this.state.fieldsLoaded) {
+    if (this.state.cadastral && this.state.fields) {
       return (
         <Paper>
-          <Map bounds={this.getBounds()}  className={classes.map}>
+          <Map bounds={this.getBounds()} className={classes.map}>
             <TileLayer url="http://mt0.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}" />
             {this.state.cadastral.polygon.coordinates}
             <GeoJSON
@@ -148,9 +172,9 @@ class CadastralInfo extends React.Component {
                   }
                 }}
               />
-              {this.state.fields.map(f => (
+              {this.state.fields.map((f, idx) => (
                 <Polygon
-                  key={f.id}
+                  key={idx}
                   positions={L.GeoJSON.coordsToLatLngs(
                     f.polygon.coordinates,
                     1
@@ -160,6 +184,14 @@ class CadastralInfo extends React.Component {
                   }}
                   weight={1}
                   color={f.color}
+                  fillOpacity={0.01}
+                />
+              ))}
+              {this.state.ndvi.map((n, idx) => (
+                <ReactDistortableImageOverlay
+                  corners={n.bounds}
+                  url={n.url}
+                  key={idx}
                 />
               ))}
             </FeatureGroup>
@@ -177,7 +209,7 @@ class CadastralInfo extends React.Component {
                 >
                   <Tab label="Поле" />
                   <Tab label="Погода" />
-                  <Tab label="NDVI" disabled />
+                  <Tab label="NDVI" />
                 </Tabs>
               </AppBar>
               {this.state.tabValue === 0 && (
@@ -189,6 +221,12 @@ class CadastralInfo extends React.Component {
               )}
               {this.state.tabValue === 1 && (
                 <Weather field={this.state.currentField} />
+              )}
+              {this.state.tabValue === 2 && (
+                <NDVI
+                  field={this.state.currentField}
+                  showNDVI={this.showNDVI}
+                />
               )}
             </div>
           </Drawer>

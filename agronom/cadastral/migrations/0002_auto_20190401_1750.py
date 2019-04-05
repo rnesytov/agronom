@@ -20,6 +20,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='cadastralinfo',
             name='polygon',
-            field=django.contrib.gis.db.models.fields.MultiPolygonField(geography=True, null=True, srid=4326),
+            field=django.contrib.gis.db.models.fields.MultiPolygonField(null=True),
         ),
     ]

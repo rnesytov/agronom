@@ -6,4 +6,4 @@ from .models import NDVI
 class NDVISerializer(serializers.ModelSerializer):
     class Meta:
         model = NDVI
-        fields = ('date', 'img', 'mean')
+        fields = ('date', 'img', 'mean', 'boundary')

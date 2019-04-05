@@ -18,8 +18,8 @@ class Migration(migrations.Migration):
             name='Field',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('polygon', django.contrib.gis.db.models.fields.PolygonField(geography=True, srid=4326)),
-                ('centroid', django.contrib.gis.db.models.fields.PointField(geography=True, srid=4326)),
+                ('polygon', django.contrib.gis.db.models.fields.PolygonField()),
+                ('centroid', django.contrib.gis.db.models.fields.PointField()),
                 ('name', models.CharField(default='My field', max_length=100)),
                 ('cadastral', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cadastral.CadastralInfo')),
             ],

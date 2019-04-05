@@ -19,7 +19,7 @@ class CadastralInfo(models.Model):
         validators=[RegexValidator('[0-9]{2}:[0-9]{2}:[0-9]{1,7}:[0-9]{1,10}', 'Invalid cadastral number')]
     )
     loading_state = models.PositiveSmallIntegerField(choices=LOADING_STATES, default=NOT_LOADED)
-    polygon = models.MultiPolygonField(null=True, geography=True, srid=4326)
+    polygon = models.MultiPolygonField(null=True)
 
     def __str__(self):
         return "%s %s" % (self.__class__.__name__, self.cadastral_number)

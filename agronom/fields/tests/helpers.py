@@ -20,9 +20,9 @@ def setup_cadastral_info(user):
         polygon=STUB_CADASTRAL_POLYGON)
 
 
-def setup_field(cad_info):
+def setup_field(cad_info, name='Test field', polygon=STUB_FIELD_POLYGON, centroid=STUB_FIELD_CENTROID):
     return Field.objects.create(
         cadastral=cad_info,
-        name='Test field',
-        polygon=STUB_FIELD_POLYGON,
-        centroid=STUB_FIELD_CENTROID)
+        name=name,
+        polygon=polygon,
+        centroid=centroid)
