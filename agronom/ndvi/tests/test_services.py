@@ -50,7 +50,6 @@ class TestGetFieldProducts(BaseTestCase):
             '00ae448d-6466-47a4-8237-56c0aa05cffb': [self.field1.id, self.field2.id],
             '69b20381-a696-4d89-b03f-2fc3f982b37d': [self.field1.id, self.field2.id]
         })
-        import ipdb; ipdb.set_trace()
         self.assertEqual(responses.calls[0].request.body, (
             'q=beginPosition%3A%5B2019-04-04T00%3A00%3A00Z+TO+2019-04-09T00%3A00%3A00Z%5D+cloudcoverpercentage%3A%5B0'
             '+TO+30%5D+platformname%3ASentinel-2+producttype%3AS2MSI1C+footprint%3A%22Contains%28POLYGON+%28%2839.09'
