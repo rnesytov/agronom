@@ -81,6 +81,6 @@ class LoadNDVI(SentinelAPIMixin):
 
     def maybe_cleanup(self, ctx):
         if ctx.cleanup:
-            shutil.rmtree(settings.SENTINEL_PRODUCTS_DOWNLOAD_PATH)
+            shutil.rmtree(ctx.product['path'])
 
         return Result()

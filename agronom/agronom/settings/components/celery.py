@@ -13,5 +13,9 @@ CELERY_BEAT_SCHEDULE = {
     'update_weather': {
         'task': 'weather.tasks.update_current_weather_for_all_fields',
         'schedule': crontab(hour=3)
+    },
+    'load_ndvi': {
+        'task': 'ndvi.tasks.load_ndvi_for_all_fields',
+        'shedule': crontab(hour=4)
     }
 }

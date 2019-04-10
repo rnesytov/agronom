@@ -75,14 +75,14 @@ class TestFieldsAPI(APITestCase):
                 'centroid': centroid_dict,
                 'color': '#333777',
                 'crop_type': 'Wheat',
-                'id': fields[1].id,
-                'name': 'Field 1',
+                'id': fields[0].id,
+                'name': 'Field 0',
                 'polygon': polygon_dict
             }, {
                 'centroid': centroid_dict,
                 'color': '#333777',
                 'crop_type': 'Wheat',
-                'id': fields[0].id,
-                'name': 'Field 0',
+                'id': fields[1].id,
+                'name': 'Field 1',
                 'polygon': polygon_dict
             }])

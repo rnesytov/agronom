@@ -9,14 +9,7 @@ import {
 import axios from "axios";
 import L from "leaflet";
 import React from "react";
-import {
-  FeatureGroup,
-  Map,
-  Polygon,
-  TileLayer,
-  GeoJSON,
-  ImageOverlay
-} from "react-leaflet";
+import { FeatureGroup, Map, Polygon, TileLayer, GeoJSON } from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";
 import EditField from "./EditField";
 import Weather from "./Weather";
@@ -122,7 +115,7 @@ class CadastralInfo extends React.Component {
     this.setState({ tabValue });
   };
 
-  showNDVI = (ndvi) => {
+  showNDVI = ndvi => {
     const coords = ndvi.boundary.coordinates;
 
     const preparedNDVI = {
@@ -135,8 +128,8 @@ class CadastralInfo extends React.Component {
       ]
     };
 
-    this.setState({ ndvi: this.state.ndvi.concat([preparedNDVI])})
-  }
+    this.setState({ ndvi: this.state.ndvi.concat([preparedNDVI]) });
+  };
 
   render() {
     const { classes } = this.props;
@@ -184,7 +177,7 @@ class CadastralInfo extends React.Component {
                   }}
                   weight={1}
                   color={f.color}
-                  fillOpacity={0.01}
+                  fillOpacity={0.1}
                 />
               ))}
               {this.state.ndvi.map((n, idx) => (

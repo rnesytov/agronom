@@ -32,3 +32,5 @@ docs/_api_build
 docs/_full_build
 # Vagrant directory
 .vagrant
+# dev media
+agronom/media/

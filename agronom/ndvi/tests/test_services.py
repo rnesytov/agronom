@@ -16,11 +16,6 @@ from ndvi.services import GetFieldProducts, LoadNDVI
 from ndvi.models import NDVI
 
 
-TARGET_POLYGON = ('{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[39.08892631530762,'
-                  '47.77111821801076],[39.10901069641113,47.77106053169401],[39.10909652709961,47.77515610117473],'
-                  '[39.08815383911133,47.77550219085685],[39.08892631530762,47.77111821801076]]]}}')
-
-
 class BaseTestCase(_BaseTestCase):
     @property
     def fixtures_path(self):
@@ -50,12 +45,17 @@ class TestGetFieldProducts(BaseTestCase):
             body=self.load_fixture('sentinel_query_api_response.json')
         )
 
-        result = GetFieldProducts()(self.cad.field_set, datetime.now())
+        result = GetFieldProducts()(self.cad.field_set.order_by('id'), datetime.now())
         self.assertEqual(result, {
-            '00ae448d-6466-47a4-8237-56c0aa05cffb': [self.field2.id, self.field1.id],
-            '69b20381-a696-4d89-b03f-2fc3f982b37d': [self.field2.id, self.field1.id]
+            '00ae448d-6466-47a4-8237-56c0aa05cffb': [self.field1.id, self.field2.id],
+            '69b20381-a696-4d89-b03f-2fc3f982b37d': [self.field1.id, self.field2.id]
         })
+        import ipdb; ipdb.set_trace()
         self.assertEqual(responses.calls[0].request.body, (
+            'q=beginPosition%3A%5B2019-04-04T00%3A00%3A00Z+TO+2019-04-09T00%3A00%3A00Z%5D+cloudcoverpercentage%3A%5B0'
+            '+TO+30%5D+platformname%3ASentinel-2+producttype%3AS2MSI1C+footprint%3A%22Contains%28POLYGON+%28%2839.09'
+            '+47.78%2C+39.09+47.77%2C+39.1+47.77%2C+39.09+47.78%29%29%29%22'))
+        self.assertEqual(responses.calls[1].request.body, (
             'q=beginPosition%3A%5B2019-04-04T00%3A00%3A00Z+TO+2019-04-09T00%3A00%3A00Z%5D+cloudcoverpercentage%3A%5B0'
             '+TO+30%5D+platformname%3ASentinel-2+producttype%3AS2MSI1C+footprint%3A%22Contains%28POLYGON+%28%2839.12'
             '+47.83%2C+39.12+47.82%2C+39.13+47.83%2C+39.12+47.83%29%29%29%22'))
@@ -76,10 +76,10 @@ class TestGetFieldProducts(BaseTestCase):
             body=self.load_fixture('sentinel_query_api_response.json')
         )
 
-        result = GetFieldProducts()(self.cad.field_set, datetime.now())
+        result = GetFieldProducts()(self.cad.field_set.order_by('id'), datetime.now())
         self.assertEqual(result, {
             '00ae448d-6466-47a4-8237-56c0aa05cffb': [self.field2.id],
-            '69b20381-a696-4d89-b03f-2fc3f982b37d': [self.field2.id, self.field1.id]
+            '69b20381-a696-4d89-b03f-2fc3f982b37d': [self.field1.id, self.field2.id]
         })
 
 
@@ -98,7 +98,7 @@ class TestLoadNDVI(BaseTestCase):
     @responses.activate
     def test_successful_load(self):
         product_id = '7320f6d7-c1fe-4723-8704-90231881dd34'
-        url = "https://scihub.copernicus.eu/dhus/odata/v1/Products('7320f6d7-c1fe-4723-8704-90231881dd34')?$format=json"
+        url = "https://scihub.copernicus.eu/dhus/odata/v1/Products('%s')?$format=json" % product_id
         responses.add(
             method=responses.GET,
             url=url,
@@ -131,7 +131,5 @@ class TestLoadNDVI(BaseTestCase):
             expected_img_arr = np.load(os.path.join(self.fixtures_path, 'expected_image_array.npy'))
             self.assertTrue(np.array_equal(actual_img_arr, expected_img_arr))
 
-            rmtree.assert_called_once_with(self.fixtures_path)
-
-    def test_invalid_md5_checksum(self):
-        pass
+            rmtree.assert_called_once_with(
+                '%s/%s' % (self.fixtures_path, 'S2A_MSIL1C_20190401T081601_N0207_R121_T37TEN_20190401T094937.zip'))
