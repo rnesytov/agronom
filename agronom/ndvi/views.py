@@ -2,9 +2,9 @@ import coreapi
 from rest_framework import generics, schemas, pagination
 from rest_framework.permissions import IsAuthenticated
 
+from fields.permissions import IsFieldOwner
 from .models import NDVI
 from .serializers import NDVISerializer
-from weather.permissions import IsFieldOwner
 
 
 class NDVIView(generics.ListAPIView):

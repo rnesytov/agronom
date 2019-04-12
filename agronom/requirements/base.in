@@ -50,6 +50,7 @@ pika               # Для передачи метрик в экспортер 
 ### Внешние API
 
 requests         # Библиотека для выполнения HTTP-запросов
+sentinelsat      # Обертка над API scihub.copernicus
 
 
 ### Other utils

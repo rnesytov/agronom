@@ -4,15 +4,21 @@ import os
 import freezegun
 from datetime import datetime
 from unittest.mock import patch, call
+from model_mommy import mommy
+from django.contrib.gis.geos import Point
 
 from weather.services import GetWeatherData, GetWeatherHistory
 from core.tests.base_test_case import BaseTestCase
-from .mixin import WeatherTestMixin
 
 
-class TestGetWeather(WeatherTestMixin, BaseTestCase):
+class TestGetWeather(BaseTestCase):
     WEATHER_BEGIN_DATE = datetime(2019, 3, 17)
     WEATHER_END_DATE = datetime(2019, 3, 20)
+
+    def setUp(self):
+        super().setUp()
+
+        self.field = mommy.make('fields.Field', centroid=Point(38.21, 53.97))
 
     @staticmethod
     def load_fixture(name, mode='r'):
@@ -35,7 +41,7 @@ class TestGetWeather(WeatherTestMixin, BaseTestCase):
 
         self.assertTrue(result.is_success)
         self.assertEqual(responses.calls[0].request.path_url, (
-            '/premium/v1/past-weather.ashx?q=38.20744514465332%2C53.9711579991986&date=2019-03-17&enddate=2019-03-20'
+            '/premium/v1/past-weather.ashx?q=38.21%2C53.97&date=2019-03-17&enddate=2019-03-20'
             '&tp=24&format=json&key=570cabc13dca49dab1295355190104'
             ))
 
@@ -59,7 +65,7 @@ class TestGetWeather(WeatherTestMixin, BaseTestCase):
         self.assertTrue(result.failed_because(GetWeatherData().get.failures.invalid_api_response))
 
 
-class TestGetWeatherHistory(WeatherTestMixin, BaseTestCase):
+class TestGetWeatherHistory(BaseTestCase):
     @freezegun.freeze_time('2019-03-20')
     @patch('weather.services.GetWeatherData')
     def test_calc_weather_periods(self, get_weather_data):

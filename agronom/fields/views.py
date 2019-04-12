@@ -1,21 +1,17 @@
 import coreapi
-from rest_framework import generics, serializers, schemas, mixins
+from rest_framework import generics, serializers, schemas
 from rest_framework.permissions import IsAuthenticated
+
 
 from .serializers import FieldsSerializer
 from .services import CheckPolygon
 from .models import Field
 from cadastral.permissions import IsCadastralOwner
 from weather.tasks import load_weather_history_for_field
+from core.views import ListCreateDestroyUpdateAPIView
 
 
-class FieldsView(
-    mixins.ListModelMixin,
-    mixins.CreateModelMixin,
-    mixins.DestroyModelMixin,
-    mixins.UpdateModelMixin,
-    generics.GenericAPIView
-):
+class FieldsView(ListCreateDestroyUpdateAPIView):
     schema = schemas.AutoSchema(
         manual_fields=[
             coreapi.Field(name='cadastral_id', location='path', required=True),
@@ -59,4 +55,4 @@ class FieldsView(
             load_weather_history_for_field.delay(field.id)
         else:
             if result.failed_because(CheckPolygon().check.failures.invalid_geometry_type):
-                raise serializers.ValidationError('Неверный тип полигона')
+                raise serializers.ValidationError('Invalid geometry type')

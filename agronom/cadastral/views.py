@@ -1,6 +1,5 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from django.shortcuts import get_object_or_404
 
 from .models import CadastralInfo
 from .serializers import CadastralListCreateSerializer, CadastralRetrieveSerializer
@@ -26,6 +25,5 @@ class CadastralListCreateView(generics.ListCreateAPIView):
 class CadastralRetrieveView(generics.RetrieveAPIView):
     permission_classes = (IsAuthenticated, IsCadastralOwner)
     serializer_class = CadastralRetrieveSerializer
-
-    def get_object(self):
-        return get_object_or_404(CadastralInfo, pk=self.kwargs['cadastral_id'])
+    queryset = CadastralInfo.objects.all()
+    lookup_url_kwarg = 'cadastral_id'

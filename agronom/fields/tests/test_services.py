@@ -1,14 +1,14 @@
 from core.tests.base_test_case import BaseTestCase
+from model_mommy import mommy
 
 from fields.services import CheckPolygon
-from .helpers import setup_cadastral_info
 
 
 class TestCheckPolygon(BaseTestCase):
     def setUp(self):
         super().setUp()
 
-        self.cad_info = setup_cadastral_info(self.user)
+        self.cad_info = mommy.make('cadastral.CadastralInfo')
 
     def test_successful_check(self):
         polygon_json = ('{ "type": "Polygon", "coordinates": [ [ [ 38.206071853637688, 53.970072576021586 ], '

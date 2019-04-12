@@ -24,7 +24,6 @@ REST_FRAMEWORK = {
 
     },
     'NON_FIELD_ERRORS_KEY': 'non_field_errors',
-    'DATETIME_FORMAT': '%s',
     'COERCE_DECIMAL_TO_STRING': True,
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'EXCEPTION_HANDLER': 'core.exception_handler.custom_exception_handler',

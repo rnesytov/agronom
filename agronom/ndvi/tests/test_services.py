@@ -9,32 +9,26 @@ from freezegun import freeze_time
 from django.test import override_settings
 from django.contrib.gis.geos import Point, MultiPoint
 from unittest import mock
+from model_mommy import mommy
 
-from core.tests.base_test_case import BaseTestCase as _BaseTestCase
-from fields.tests.helpers import setup_cadastral_info, setup_field
+from core.tests.base_test_case import BaseTestCase
 from ndvi.services import GetFieldProducts, LoadNDVI
 from ndvi.models import NDVI
-
-
-class BaseTestCase(_BaseTestCase):
-    @property
-    def fixtures_path(self):
-        script_dir = os.path.dirname(__file__)
-
-        return os.path.join(script_dir, 'fixtures')
-
-    def load_fixture(self, name, mode='r'):
-        with open(os.path.join(self.fixtures_path, name), mode) as f:
-            return f.read()
 
 
 class TestGetFieldProducts(BaseTestCase):
     def setUp(self):
         super().setUp()
 
-        self.cad = setup_cadastral_info(self.user)
-        self.field1 = setup_field(self.cad, polygon='POLYGON((39.09 47.78, 39.09 47.77, 39.10 47.77, 39.09 47.78))')
-        self.field2 = setup_field(self.cad, polygon='POLYGON((39.12 47.83, 39.12 47.82, 39.13 47.83, 39.12 47.83))')
+        self.cad_info = mommy.make('cadastral.CadastralInfo')
+        self.field1 = mommy.make(
+            'fields.Field',
+            cadastral=self.cad_info,
+            polygon='POLYGON((39.09 47.78, 39.09 47.77, 39.10 47.77, 39.09 47.78))')
+        self.field2 = mommy.make(
+            'fields.Field',
+            cadastral=self.cad_info,
+            polygon='POLYGON((39.12 47.83, 39.12 47.82, 39.13 47.83, 39.12 47.83))')
 
     @responses.activate
     @freeze_time('2019-04-09')
@@ -45,7 +39,7 @@ class TestGetFieldProducts(BaseTestCase):
             body=self.load_fixture('sentinel_query_api_response.json')
         )
 
-        result = GetFieldProducts()(self.cad.field_set.order_by('id'), datetime.now())
+        result = GetFieldProducts()(self.cad_info.field_set.order_by('id'), datetime.now())
         self.assertEqual(result, {
             '00ae448d-6466-47a4-8237-56c0aa05cffb': [self.field1.id, self.field2.id],
             '69b20381-a696-4d89-b03f-2fc3f982b37d': [self.field1.id, self.field2.id]
@@ -75,7 +69,7 @@ class TestGetFieldProducts(BaseTestCase):
             body=self.load_fixture('sentinel_query_api_response.json')
         )
 
-        result = GetFieldProducts()(self.cad.field_set.order_by('id'), datetime.now())
+        result = GetFieldProducts()(self.cad_info.field_set.order_by('id'), datetime.now())
         self.assertEqual(result, {
             '00ae448d-6466-47a4-8237-56c0aa05cffb': [self.field2.id],
             '69b20381-a696-4d89-b03f-2fc3f982b37d': [self.field1.id, self.field2.id]
@@ -85,14 +79,18 @@ class TestGetFieldProducts(BaseTestCase):
 class TestLoadNDVI(BaseTestCase):
     test_media_root = '/tmp/agronom_test_media_root/'
 
+    @property
+    def fixtures_path(self):
+        script_dir = os.path.dirname(__file__)
+
+        return os.path.join(script_dir, 'fixtures')
+
     def setUp(self):
         super().setUp()
 
-        self.cad = setup_cadastral_info(self.user)
-        self.field = setup_field(
-            cad_info=self.cad,
-            polygon='POLYGON((39.08 47.77, 39.10 47.77, 39.109 47.775, 39.088 47.775, 39.08 47.77))'
-        )
+        self.field = mommy.make(
+            'fields.Field',
+            polygon='POLYGON((39.08 47.77, 39.10 47.77, 39.109 47.775, 39.088 47.775, 39.08 47.77))')
 
     @responses.activate
     def test_successful_load(self):

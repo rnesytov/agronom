@@ -1,29 +1,16 @@
-import os
 import responses
+from model_mommy import mommy
 
 from cadastral.services import SaveCadastralPolygon, GetCadastralPolygon
 from cadastral.models import CadastralInfo
-from core.tests.base_test_case import BaseTestCase as _BaseTestCase
-
-
-class BaseTestCase(_BaseTestCase):
-    @staticmethod
-    def load_fixture(name, mode='r'):
-        script_dir = os.path.dirname(__file__)
-        fixture_path = os.path.join(script_dir, 'fixtures', name)
-
-        with open(fixture_path, mode) as f:
-            return f.read()
+from core.tests.base_test_case import BaseTestCase
 
 
 class TestSaveCadastralPolygon(BaseTestCase):
     @responses.activate
     def test_save_cadastral_polygon(self):
-        cadastral_info = CadastralInfo(
-            cadastral_number='71:12:030110:46',
-            user=self.user
-        )
-        cadastral_info.save()
+        cadastral_info = mommy.make(CadastralInfo, user=self.user, cadastral_number='71:12:030110:46')
+
         responses.add(
             responses.GET,
             'https://pkk5.rosreestr.ru/api/features/1/71:12:30110:46',
@@ -40,7 +27,6 @@ class TestSaveCadastralPolygon(BaseTestCase):
         result = SaveCadastralPolygon().save_polygon.run(cadastral_info.id)
 
         self.assertTrue(result.is_success)
-
         self.assertEqual(len(responses.calls), 2)
         self.assertEqual(
             responses.calls[1].request.url, (
@@ -56,12 +42,7 @@ class TestSaveCadastralPolygon(BaseTestCase):
         self.assertJSONEqual(cadastral_info.polygon.geojson, self.load_fixture('expected_cad_poly.json'))
 
     def test_always_loaded_info(self):
-        cadastral_info = CadastralInfo(
-            cadastral_number='2:56:30302:639',
-            user=self.user,
-            loading_state=CadastralInfo.LOADED
-        )
-        cadastral_info.save()
+        cadastral_info = mommy.make(CadastralInfo, user=self.user, loading_state=CadastralInfo.LOADED)
         result = SaveCadastralPolygon().save_polygon.run(cadastral_info.id)
 
         self.assertTrue(result.is_failure)

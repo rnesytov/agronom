@@ -4,6 +4,10 @@ import "./index.css";
 import Dashboard from "./Dashboard";
 import * as serviceWorker from "./serviceWorker";
 
+import * as moment from "moment";
+import "moment/locale/ru";
+moment.locale("ru");
+
 ReactDOM.render(<Dashboard />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change

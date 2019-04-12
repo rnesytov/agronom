@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .models import Weather
 from .serializers import WeatherSerializer
-from .permissions import IsFieldOwner
+from fields.permissions import IsFieldOwner
 
 
 class WeatherView(generics.ListAPIView):

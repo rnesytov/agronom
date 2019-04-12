@@ -14,6 +14,7 @@ import { EditControl } from "react-leaflet-draw";
 import EditField from "./EditField";
 import Weather from "./Weather";
 import NDVI from "./NDVI";
+import Operations from "./Operations";
 import ReactDistortableImageOverlay from "react-leaflet-distortable-imageoverlay";
 
 const styles = {
@@ -21,7 +22,7 @@ const styles = {
     height: "90vh"
   },
   drawer: {
-    width: 480
+    width: 640
   }
 };
 
@@ -203,6 +204,7 @@ class CadastralInfo extends React.Component {
                   <Tab label="Поле" />
                   <Tab label="Погода" />
                   <Tab label="NDVI" />
+                  <Tab label="Операции" />
                 </Tabs>
               </AppBar>
               {this.state.tabValue === 0 && (
@@ -220,6 +222,9 @@ class CadastralInfo extends React.Component {
                   field={this.state.currentField}
                   showNDVI={this.showNDVI}
                 />
+              )}
+              {this.state.tabValue === 3 && (
+                <Operations field={this.state.currentField} />
               )}
             </div>
           </Drawer>

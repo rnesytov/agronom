@@ -15,7 +15,7 @@ celery==4.2.1             # via flower
 certifi==2018.11.29       # via requests
 chardet==3.0.4            # via requests
 click-plugins==1.0.4      # via rasterio
-click==7.0                # via click-plugins, cligj, pip-tools, rasterio
+click==7.0                # via click-plugins, cligj, geomet, pip-tools, rasterio, sentinelsat
 cligj==0.5.0              # via rasterio
 cloudpickle==0.8.1        # via scikit-image
 cycler==0.10.0            # via matplotlib
@@ -38,10 +38,13 @@ elasticsearch-dsl==6.3.1
 elasticsearch==6.3.1      # via elasticsearch-dsl
 flower==0.9.2
 funcy==1.11               # via django-cacheops
+geojson==2.4.1            # via sentinelsat
+geomet==0.2.0.post2       # via sentinelsat
 gevent==1.4.0             # via gunicorn
 greenlet==0.4.15          # via gevent
 gunicorn[gevent]==19.9.0
 hiredis==1.0.0            # via aioredis
+html2text==2018.1.9       # via sentinelsat
 idna==2.8                 # via requests
 kiwisolver==1.0.1         # via matplotlib
 kombu==4.3.0              # via celery
@@ -68,10 +71,12 @@ requests-oauthlib==1.2.0  # via django-allauth
 requests==2.21.0
 scikit-image==0.14.2
 scipy==1.2.1              # via scikit-image
-six==1.12.0               # via cycler, django-cacheops, elasticsearch-dsl, pip-tools, python-dateutil, scikit-image
+sentinelsat==0.13
+six==1.12.0               # via cycler, django-cacheops, elasticsearch-dsl, geomet, pip-tools, python-dateutil, scikit-image, sentinelsat
 snuggs==1.4.3             # via rasterio
 stories==0.10
 toolz==0.9.0              # via dask
 tornado==5.1.1            # via flower
+tqdm==4.31.1              # via sentinelsat
 urllib3==1.24.1           # via elasticsearch, requests
 vine==1.2.0               # via amqp

@@ -27,6 +27,7 @@ coverage              # отчет о покрытии кода тестами
 pytest-django         # для удобного сообщения об ошибке в тестах
 responses             # моки http-запросов
 freezegun             # моки datetime
+model_mommy           # фабрики моделей
 
 ### Frontend
 

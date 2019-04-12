@@ -20,14 +20,14 @@ class Weather extends React.Component {
     if (this.state.weather.length > 0) {
       return (
         <List>
-          {this.state.weather.map(w => (
-            <ListItem key={w.id}>
+          {this.state.weather.map((w, i) => (
+            <ListItem key={i}>
               <Avatar src={w.data.hourly[0].weatherIconUrl[0].value} />
               <ListItemText
                 secondary={moment(w.date, "YYYY-MM-DD").format(
-                  "MMMM Do YYYY"
+                  "D.M.YYYY"
                 )}
-                primary={w.data.maxtempC}
+                primary={"+" + w.data.maxtempC + " °C"}
               />
             </ListItem>
           ))}

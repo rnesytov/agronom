@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'cadastral',
     'fields',
     'weather',
-    'ndvi'
+    'ndvi',
+    'operations'
 ]
 
 

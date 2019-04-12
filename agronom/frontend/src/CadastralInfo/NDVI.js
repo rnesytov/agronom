@@ -16,22 +16,23 @@ class NDVI extends React.Component {
       });
   }
 
-  handleClick = () => {
-    console.log("IT'S A CLICK!!!");
-  };
-
   render() {
     if (this.state.ndvi.length > 0) {
       return (
         <List>
           {this.state.ndvi.map((n, i) => (
-            <ListItem key={i} button>
+            <ListItem
+              key={i}
+              button
+              onClick={() => {
+                this.props.showNDVI(n);
+              }}
+            >
               <ListItemText
-                primary={moment(n.date, "YYYY-MM-DD").format("MMMM Do YYYY")}
-                secondary={`Среднее значение: ${n.mean}`}
-                onClick={() => {
-                  this.props.showNDVI(n);
-                }}
+                primary={`Среднее значение: ${n.mean}`}
+                secondary={moment(n.date, "YYYY-MM-DD").format(
+                  "D.M.YYYY"
+                )}
               />
             </ListItem>
           ))}
