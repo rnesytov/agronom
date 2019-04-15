@@ -34,3 +34,6 @@ docs/_full_build
 .vagrant
 # dev media
 agronom/media/
+# test report
+agronom/junit.xml
+agronom/htmlcov

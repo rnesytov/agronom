@@ -22,12 +22,12 @@ ipdb                  # IPython в manage.py shell
 
 ### Тестирование
 
-flake8                # для проверки коммита
-coverage              # отчет о покрытии кода тестами
-pytest-django         # для удобного сообщения об ошибке в тестах
-responses             # моки http-запросов
-freezegun             # моки datetime
-model_mommy           # фабрики моделей
+flake8                  # для проверки коммита
+coverage                # отчет о покрытии кода тестами
+responses               # моки http-запросов
+freezegun               # моки datetime
+model_mommy             # фабрики моделей
+unittest-xml-reporting  # junit репорт
 
 ### Frontend
 
