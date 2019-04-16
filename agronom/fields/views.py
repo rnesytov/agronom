@@ -38,7 +38,7 @@ class FieldsView(ListCreateDestroyUpdateAPIView):
     def get_queryset(self):
         return Field.objects.filter(
             cadastral_id=self.kwargs['cadastral_id']
-        )
+        ).order_by('id')
 
     def perform_create(self, serializer):
         result = CheckPolygon().check.run(

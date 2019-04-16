@@ -85,6 +85,15 @@ class TestLoadNDVI(BaseTestCase):
 
         return os.path.join(script_dir, 'fixtures')
 
+    def assertMultiPointAlmostEqual(self, actual, expected, places=12):
+        actual_list = [c for coords in expected.coords for c in coords]
+        expected_list = [c for coords in expected.coords for c in coords]
+
+        self.assertEqual(len(actual_list), len(expected_list))
+
+        for i in range(len(actual_list)):
+            self.assertAlmostEqual(actual_list[i], expected_list[i], places=places)
+
     def setUp(self):
         super().setUp()
 
@@ -120,9 +129,10 @@ class TestLoadNDVI(BaseTestCase):
             self.assertEqual(ndvi.date, date(2019, 4, 1))
             self.assertEqual(ndvi.img.path, '%s/%s_%s.png' % (tempdir, self.field.id, product_id))
             self.assertEqual(ndvi.mean, Decimal('0.04'))
-            self.assertEqual(ndvi.boundary.wkt, (
+            # GDAL transforms coordinates differently in Linux (eventually last decinmal is bigger)
+            self.assertMultiPointAlmostEqual(ndvi.boundary, MultiPoint.from_ewkt((
                 'MULTIPOINT (39.07995277241874 47.77503602474064, 39.10905072921727 47.7750120679121, '
-                '39.07994504955796 47.76999740415842, 39.10904019571561 47.76997345153469)'))
+                '39.07994504955796 47.76999740415842, 39.10904019571561 47.76997345153469)')))
 
             actual_img_arr = np.array(Image.open(ndvi.img.path).convert('RGBA'))
             expected_img_arr = np.load(os.path.join(self.fixtures_path, 'expected_image_array.npy'))
