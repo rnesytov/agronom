@@ -18,4 +18,4 @@ class NDVIView(generics.ListAPIView):
     pagination_class = pagination.LimitOffsetPagination
 
     def get_queryset(self):
-        return NDVI.objects.filter(field_id=self.request.query_params['field_id'])
+        return NDVI.objects.filter(field_id=self.request.query_params['field_id']).order_by('id')
